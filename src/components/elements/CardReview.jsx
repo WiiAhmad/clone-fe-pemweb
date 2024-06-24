@@ -4,34 +4,34 @@ import { Button } from "@/components/ui/button";
 export default function CardReview() {
   return (
     <Card className="w-full max-w-md">
-      <div className="grid grid-cols-[1fr_2fr] gap-4 p-4">
+      <div className="grid grid-cols-[1fr_2fr] p-3">
         <img
           src="/placeholder.svg"
           alt="Product Image"
-          width={200}
-          height={200}
+          width={150}
+          height={150}
           className="rounded-md object-cover"
         />
         <div className="grid gap-2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <h3 className="text-lg font-semibold">Ergonomic Desk Chair</h3>
-            <div className="flex items-center gap-1">
-              <StarIcon className="w-5 h-5 fill-primary" />
-              <StarIcon className="w-5 h-5 fill-primary" />
-              <StarIcon className="w-5 h-5 fill-primary" />
-              <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
-              <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
-              <span className="text-sm text-muted-foreground">(4.2)</span>
-            </div>
+          </div>
+          <div className="flex items-center gap-1">
+            <StarIcon className="w-5 h-5 fill-primary" />
+            <StarIcon className="w-5 h-5 fill-primary" />
+            <StarIcon className="w-5 h-5 fill-primary" />
+            <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
+            <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
+            <span className="text-sm text-muted-foreground">(4.2)</span>
           </div>
           <p className="text-sm text-muted-foreground">
             This ergonomic desk chair provides excellent lumbar support and
             adjustable features for all-day comfort.
           </p>
-          <Button variant="link">
+          {/* <Button variant="link">
             <ArrowRightIcon className="w-4 h-4 mr-2" />
             Read full review
-          </Button>
+          </Button> */}
         </div>
       </div>
     </Card>

@@ -3,12 +3,15 @@ import {Link} from "react-router-dom";
 
 export default function Activity() {
   return (
-    <div className="container flex">
-      <section id="projects" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+    <div className="bg-muted">
+      <div className="container flex">
+        <section id="projects" className="w-full py-12 md:py-24 lg:py-24">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">My Projects</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  My Projects
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Check out some of the web applications I've built.
                 </p>
@@ -27,7 +30,10 @@ export default function Activity() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <CardTitle>Project 1</CardTitle>
-                  <CardDescription>A web application that helps users manage their tasks and projects.</CardDescription>
+                  <CardDescription>
+                    A web application that helps users manage their tasks and
+                    projects.
+                  </CardDescription>
                   <div className="flex justify-end">
                     <Link
                       href="#"
@@ -52,7 +58,8 @@ export default function Activity() {
                 <CardContent className="space-y-2">
                   <CardTitle>Project 2</CardTitle>
                   <CardDescription>
-                    A web application that helps users track their fitness goals and progress.
+                    A web application that helps users track their fitness goals
+                    and progress.
                   </CardDescription>
                   <div className="flex justify-end">
                     <Link
@@ -77,7 +84,10 @@ export default function Activity() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <CardTitle>Project 3</CardTitle>
-                  <CardDescription>A web application that helps users manage their personal finances.</CardDescription>
+                  <CardDescription>
+                    A web application that helps users manage their personal
+                    finances.
+                  </CardDescription>
                   <div className="flex justify-end">
                     <Link
                       href="#"
@@ -92,6 +102,7 @@ export default function Activity() {
             </div>
           </div>
         </section>
+      </div>
     </div>
   );
 }

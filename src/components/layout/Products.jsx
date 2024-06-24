@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 export default function Products() {
   return (
@@ -93,6 +94,11 @@ export default function Products() {
                 A breathtaking view of majestic mountains.
               </p>
             </div>
+          </div>
+        </div>
+        <div className="items-center justify-center text-center">
+          <div className="space-y-2">
+            <Button>Lihat Semua Produk</Button>
           </div>
         </div>
       </div>

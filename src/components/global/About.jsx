@@ -1,11 +1,3 @@
-import {Link} from "react-router-dom"
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 export default function About() {
