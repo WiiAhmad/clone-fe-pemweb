@@ -18,28 +18,29 @@ export default function Navbar() {
         <nav className="hidden items-center space-x-4 md:flex">
           <Link
             href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
+            // text-muted-foreground hover:text-foreground
+            className="text-sm font-medium"
             prefetch={false}
           >
             Home
           </Link>
           <Link
             href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
+            className="text-sm font-medium"
             prefetch={false}
           >
             About
           </Link>
           <Link
             href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
+            className="text-sm font-medium"
             prefetch={false}
           >
             Products
           </Link>
           <Link
             href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
+            className="text-sm font-medium"
             prefetch={false}
           >
             Contact
