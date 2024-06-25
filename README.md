@@ -1,8 +1,22 @@
-# React + Vite
+# WEBSITE
+## landing page
+- jumbotron // done
+- about // produk
+- prestasi // none
+- produk unggulan // about
+- aktifitas terbaru // done
+- layanan terkait // progres
+- img bottom // progres
+- footer // progres
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Contact 
+progres
 
-Currently, two official plugins are available:
+## Products
+progres
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Sign In
+progres
+
+## Sign Up
+progres
