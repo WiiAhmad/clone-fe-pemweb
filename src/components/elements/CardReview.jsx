@@ -16,7 +16,7 @@ export default function CardReview() {
           <div className="flex items-center">
             <h3 className="text-lg font-semibold">Ergonomic Desk Chair</h3>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center">
             <StarIcon className="w-5 h-5 fill-primary" />
             <StarIcon className="w-5 h-5 fill-primary" />
             <StarIcon className="w-5 h-5 fill-primary" />
