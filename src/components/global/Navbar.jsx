@@ -24,28 +24,18 @@ export default function Navbar() {
           >
             Home
           </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium"
-            prefetch={false}
-          >
+          <Link href="#" className="text-sm font-medium" prefetch={false}>
             About
           </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium"
-            prefetch={false}
-          >
+          <Link to="#" className="text-sm font-medium" prefetch={false}>
             Products
           </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium"
-            prefetch={false}
-          >
+          <Link to="/contact" className="text-sm font-medium" prefetch={false}>
             Contact
           </Link>
-          <Button>Daftar</Button>
+          <Button asChild>
+            <Link to="/signin">Daftar</Link>
+          </Button>
         </nav>
         <div className="md:hidden">
           <DropdownMenu>
