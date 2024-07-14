@@ -27,11 +27,8 @@ export default function Navbar() {
           <Link href="#" className="text-sm font-medium" prefetch={false}>
             About
           </Link>
-          <Link to="#" className="text-sm font-medium" prefetch={false}>
+          <Link to="/products" className="text-sm font-medium" prefetch={false}>
             Products
-          </Link>
-          <Link to="/contact" className="text-sm font-medium" prefetch={false}>
-            Contact
           </Link>
           <Button asChild>
             <Link to="/signin">Daftar</Link>
@@ -59,11 +56,6 @@ export default function Navbar() {
               <DropdownMenuItem>
                 <Link href="#" className="w-full" prefetch={false}>
                   Products
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="#" className="w-full" prefetch={false}>
-                  Contact
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>

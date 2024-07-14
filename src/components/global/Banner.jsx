@@ -1,5 +1,6 @@
 import BgImage from "../../assets/img/bg.svg"
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 export default function Banner() {
   return (
@@ -76,7 +77,9 @@ export default function Banner() {
             Produk Unggulan untuk Pertumbuhan Vegetatif dan Generatif yang
             Optimal
           </p>
-          <Button>Hubungi kami</Button>
+          <Button asChild>
+            <Link to="/contact">Hubungi Kami</Link>
+          </Button>
         </div>
 
         <img
