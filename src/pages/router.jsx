@@ -5,6 +5,7 @@ import DefaultLayout from "@/components/layout/DefaultLayout";
 import SignIn from "./Sign/SignIn";
 import SignUp from "./Sign/SignUp";
 import Products from "./Products/Products";
+import Activities from "./Activities/Activities";   
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/activities",
+        element: <Activities />,
       },
     ],
   },

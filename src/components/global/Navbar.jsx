@@ -26,8 +26,12 @@ export default function Navbar() {
           >
             Home
           </Link>
-          <Link href="#" className="text-sm font-medium" prefetch={false}>
-            About
+          <Link
+            to="/activities"
+            className="text-sm font-medium"
+            prefetch={false}
+          >
+            Activities
           </Link>
           <Link to="/products" className="text-sm font-medium" prefetch={false}>
             Products
@@ -51,12 +55,12 @@ export default function Navbar() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="#" className="w-full" prefetch={false}>
-                  About
+                <Link href="/activities" className="w-full" prefetch={false}>
+                  Activities
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="#" className="w-full" prefetch={false}>
+                <Link href="/products" className="w-full" prefetch={false}>
                   Products
                 </Link>
               </DropdownMenuItem>
