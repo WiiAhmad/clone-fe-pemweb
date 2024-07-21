@@ -19,16 +19,6 @@ export default function Review() {
           title="Produk 1"
           description="Deskripsi Produk 1"
         />
-        <CardReview
-          image="/images/produk-2.jpg"
-          title="Produk 2"
-          description="Deskripsi Produk 2"
-        />
-        <CardReview
-          image="/images/produk-3.jpg"
-          title="Produk 3"
-          description="Deskripsi Produk 3"
-        />
       </div>
     </div>
   );

@@ -164,13 +164,13 @@ export default function Products() {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Virtual Library</h1>
+        <h1 className="text-3xl font-bold mb-4">Produk</h1>
         <div className="flex items-center mb-4">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="order-first lg:order-1 md:order-1 mb-4 mr-4">
               <Input
                 type="text"
-                placeholder="Search books..."
+                placeholder="Cari produk..."
                 value={searchTerm}
                 onChange={handleSearch}
                 className="flex-1"
@@ -181,17 +181,17 @@ export default function Products() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="mr-4">
                     <FilterIcon className="w-4 h-4 mr-2" />
-                    Filter by category
+                    Filter kategori
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>Categories</DropdownMenuLabel>
+                  <DropdownMenuLabel>Kategori</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuCheckboxItem
                     checked={selectedCategory === "all"}
                     onCheckedChange={() => handleCategoryChange("all")}
                   >
-                    All
+                    Semua
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
                     checked={selectedCategory === "fiction"}
@@ -221,11 +221,11 @@ export default function Products() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="mr-4">
                     <ListOrderedIcon className="w-4 h-4 mr-2" />
-                    Sort by
+                    Urutkan berdasarkan
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+                  <DropdownMenuLabel>Urutkan berdasarkan</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioItem
                     value="popularity"
@@ -243,99 +243,13 @@ export default function Products() {
                   </DropdownMenuRadioItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="mr-4">
-                    <BookIcon className="w-4 h-4 mr-2" />
-                    Read status
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Read status</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuRadioItem
-                    value="all"
-                    checked={readStatus === "all"}
-                    onCheckedChange={handleReadStatusChange}
-                  >
-                    All
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem
-                    value="read"
-                    checked={readStatus === "read"}
-                    onCheckedChange={handleReadStatusChange}
-                  >
-                    Read
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem
-                    value="want to read"
-                    checked={readStatus === "want to read"}
-                    onCheckedChange={handleReadStatusChange}
-                  >
-                    Want to Read
-                  </DropdownMenuRadioItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
           </div>
         </div>
       </header>
       <main>
         <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Featured Books</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredBooks.slice(0, 4).map((book) => (
-              <div
-                key={book.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
-              >
-                <Link href="#" prefetch={false}>
-                  <img
-                    src="/placeholder.svg"
-                    alt={book.title}
-                    width={300}
-                    height={400}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold mb-2">{book.title}</h3>
-                    <p className="text-gray-600 mb-2">{book.author}</p>
-                    <p className="text-gray-500 mb-4 line-clamp-3">
-                      {book.description}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <StarIcon className="w-4 h-4 fill-primary" />
-                        <span className="text-sm font-medium">
-                          {book.popularity.toFixed(1)}
-                        </span>
-                      </div>
-                      {book.readStatus === "read" ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleMarkAsRead(book)}
-                        >
-                          Mark as Read
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleMarkAsWantToRead(book)}
-                        >
-                          Want to Read
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">All Books</h2>
+          <h2 className="text-2xl font-bold mb-4">Semua Produk</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredBooks.map((book) => (
               <div
@@ -363,23 +277,9 @@ export default function Products() {
                           {book.popularity.toFixed(1)}
                         </span>
                       </div>
-                      {book.readStatus === "read" ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleMarkAsRead(book)}
-                        >
-                          Mark as Read
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleMarkAsWantToRead(book)}
-                        >
-                          Want to Read
-                        </Button>
-                      )}
+                      <span className="text-gray-700 font-bold">
+                        Rp.{book.price}
+                      </span>
                     </div>
                   </div>
                 </Link>

@@ -5,7 +5,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Link } from "react-router-dom";
 
 export default function CardActivity({ image, title, description, date }) {
   return (
