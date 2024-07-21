@@ -1,22 +1,16 @@
-# WEBSITE
-## landing page
-- jumbotron // done
-- about // produk
-- prestasi // none
-- produk unggulan // about
-- aktifitas terbaru // done
-- layanan terkait // progres
-- img bottom // progres
-- footer // progres
+# Progress
+- ## Home Page
+    - ### 07/20/2024
+        - Moddified About Section
+        - Moddified Testimoni Section
+        - Moddified Activity Section
+        - Moddified Footer Section
+        - Moddified CardReview Element
 
-## Contact 
-progres
-
-## Products
-progres
-
-## Sign In
-progres
-
-## Sign Up
-progres
+    - ### 07/21/2024
+        - Moddified About Section
+        - Moddified Testimoni Section
+        - Moddified Activity Section
+        - Moddified Footer Section
+        - Moddified CardReview Element
+        - Moddified Products and Activity Page

@@ -12,14 +12,42 @@ export default function Activity() {
                   Aktivitas Terbaru Kami
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Berikut adalah beberapa aktivitas terbaru yang telah kami selesaikan
+                  Berikut adalah beberapa aktivitas terbaru yang telah kami
+                  selesaikan
                 </p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-              <CardActivity image="/images/produk-1.jpg" title="Produk 1" description="Deskripsi Produk 1" />
-              <CardActivity image="/images/produk-1.jpg" title="Produk 1" description="Deskripsi Produk 1" />
-              <CardActivity image="/images/produk-1.jpg" title="Produk 1" description="Deskripsi Produk 1" />
+              <CardActivity
+                image="/images/produk-1.jpg"
+                title="Produk 1"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                  vitae bibendum lacus. Lorem ipsum dolor sit amet, consectetur
+                  adipiscing elit. Proin vitae bibendum lacus. Lorem ipsum dolor
+                  sit amet, consectetur adipiscing elit. Proin vitae bibendum
+                  lacus."
+                date="January, 20, 2024"
+              />
+              <CardActivity
+                image="/images/produk-1.jpg"
+                title="Produk 1"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                  vitae bibendum lacus. Lorem ipsum dolor sit amet, consectetur
+                  adipiscing elit. Proin vitae bibendum lacus. Lorem ipsum dolor
+                  sit amet, consectetur adipiscing elit. Proin vitae bibendum
+                  lacus."
+                date="January, 20, 2024"
+              />
+              <CardActivity
+                image="/images/produk-1.jpg"
+                title="Produk 1"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                  vitae bibendum lacus. Lorem ipsum dolor sit amet, consectetur
+                  adipiscing elit. Proin vitae bibendum lacus. Lorem ipsum dolor
+                  sit amet, consectetur adipiscing elit. Proin vitae bibendum
+                  lacus."
+                date="January, 20, 2024"
+              />
             </div>
           </div>
         </section>
