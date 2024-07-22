@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export default function Activities() {
   // Sample data for activities
   const activities = [

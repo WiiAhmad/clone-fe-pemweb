@@ -7,7 +7,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
-  DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -15,7 +14,6 @@ import { Link } from "react-router-dom";
 export default function Products() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortBy, setSortBy] = useState("popularity");
   const products = [
     {
       id: 1,
@@ -81,16 +79,8 @@ export default function Products() {
       );
     }
 
-    if (sortBy === "popularity") {
-      filtered = filtered.sort((a, b) => b.rating - a.rating);
-    } else if (sortBy === "release-date") {
-      filtered = filtered.sort(
-        (a, b) => new Date(b.release_date) - new Date(a.release_date)
-      );
-    }
-
     return filtered;
-  }, [searchTerm, selectedCategory, sortBy]);
+  }, [searchTerm, selectedCategory]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -98,10 +88,6 @@ export default function Products() {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-  };
-
-  const handleSortChange = (sort) => {
-    setSortBy(sort);
   };
 
   return (
@@ -165,31 +151,6 @@ export default function Products() {
                   >
                     Peralatan
                   </DropdownMenuCheckboxItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="mr-4">
-                    Urutkan berdasarkan
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Urutkan berdasarkan</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuRadioItem
-                    value="popularity"
-                    checked={sortBy === "popularity"}
-                    onCheckedChange={() => handleSortChange("popularity")}
-                  >
-                    Popularitas
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem
-                    value="release-date"
-                    checked={sortBy === "release-date"}
-                    onCheckedChange={() => handleSortChange("release-date")}
-                  >
-                    Tanggal Rilis
-                  </DropdownMenuRadioItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
