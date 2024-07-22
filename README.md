@@ -1,8 +1,16 @@
-# React + Vite
+# Progress
+- ## Home Page
+    - ### 07/20/2024
+        - Moddified About Section
+        - Moddified Testimoni Section
+        - Moddified Activity Section
+        - Moddified Footer Section
+        - Moddified CardReview Element
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    - ### 07/21/2024
+        - Moddified About Section
+        - Moddified Testimoni Section
+        - Moddified Activity Section
+        - Moddified Footer Section
+        - Moddified CardReview Element
+        - Moddified Products and Activity Page

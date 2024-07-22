@@ -6,45 +6,39 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import ButtonTheme from "../ui/button-theme";
 
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+      <div className=" flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="#" className="mr-4 font-bold flex" prefetch={false}>
           <MountainIcon className="h-7 w-7" />
           <span className="ml-3 font-bold text-2xl">PT. PUTRA SINAR MAS</span>
         </Link>
         <nav className="hidden items-center space-x-4 md:flex">
+          <ButtonTheme />
           <Link
             href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
+            // text-muted-foreground hover:text-foreground
+            className="text-sm font-medium"
             prefetch={false}
           >
             Home
           </Link>
           <Link
-            href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
+            to="/activities"
+            className="text-sm font-medium"
             prefetch={false}
           >
-            About
+            Activities
           </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
-            prefetch={false}
-          >
+          <Link to="/products" className="text-sm font-medium" prefetch={false}>
             Products
           </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium"
-            prefetch={false}
-          >
-            Contact
-          </Link>
-          <Button>Daftar</Button>
+          <Button asChild>
+            <Link to="/signin">Daftar</Link>
+          </Button>
         </nav>
         <div className="md:hidden">
           <DropdownMenu>
@@ -61,18 +55,13 @@ export default function Navbar() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="#" className="w-full" prefetch={false}>
-                  About
+                <Link href="/activities" className="w-full" prefetch={false}>
+                  Activities
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="#" className="w-full" prefetch={false}>
+                <Link href="/products" className="w-full" prefetch={false}>
                   Products
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="#" className="w-full" prefetch={false}>
-                  Contact
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
