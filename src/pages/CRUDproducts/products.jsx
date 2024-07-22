@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,7 +23,6 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import {
   Pagination,
   PaginationContent,
@@ -34,17 +32,19 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
-import { getAllProducts, createProduct, deleteProduct } from "@/api"; // Import the API functions
+import { getAllProducts, createProduct, updateProduct, deleteProduct, getProductById } from "@/api"; // Import the API functions
 
 export default function CRUDproducts() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const [message, setMessage] = useState(""); // Add this line
   const [isLoading, setIsLoading] = useState(false);
+  const [currentTab, setCurrentTab] = useState("list"); // Add state for current tab
+  const [editProductId, setEditProductId] = useState(null);
   const [newProduct, setNewProduct] = useState({
     title: "",
     desc: "",
-    image: "",
+    image: null, // Store file object
     rating: "",
     category: "",
     release_date: "",
@@ -84,42 +84,101 @@ export default function CRUDproducts() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNewProduct({ ...newProduct, image: reader.result });
-      };
-      reader.readAsDataURL(file);
+      setNewProduct({ ...newProduct, image: file });
     }
   };
 
   const handleCreateProduct = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    Object.keys(newProduct).forEach(key => {
+      formData.append(key, newProduct[key]);
+    });
+
+    // Log the form data
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     try {
-      await createProduct(newProduct);
+      await createProduct(formData); // Pass FormData object
       setNewProduct({
         title: "",
         desc: "",
-        image: "",
+        image: null, // Reset to null
         rating: "",
         category: "",
         release_date: "",
       });
-      setMessage("Product created successfully"); // Set success message
+      setMessage("Product created successfully");
       fetchProducts();
     } catch (error) {
       setError("Failed to create product. Please try again.");
     }
   };
 
+  const handleEditProduct = async (id) => {
+    try {
+      const product = await getProductById(id);
+      setNewProduct({
+        title: product.title,
+        desc: product.desc,
+        image: null, // Reset to null, as we don't handle existing images in the form
+        rating: product.rating,
+        category: product.category,
+        release_date: product.release_date,
+      });
+      setEditProductId(id);
+      setCurrentTab("edit"); // Ensure this line is present to switch to the edit tab
+    } catch (error) {
+      setError("Failed to load product. Please try again.");
+    }
+  };
+
+  const handleUpdateProduct = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    // Append only changed fields to the FormData object
+    Object.keys(newProduct).forEach((key) => {
+      if (newProduct[key] !== "" && newProduct[key] !== null) {
+        formData.append(key, newProduct[key]);
+      }
+    });
+
+    // Log the formData entries
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    try {
+      console.log("Sending formData:", formData); // Log before sending
+      await updateProduct(editProductId, formData); // Pass FormData object
+      console.log("FormData sent successfully"); // Log after sending
+
+      setMessage("Product updated successfully");
+      fetchProducts();
+      setCurrentTab("list"); // Switch to list view after update
+    } catch (error) {
+      setError("Failed to update product. Please try again.");
+    }
+  };
+
+
   return (
     <div className="flex min-h-screen w-full">
       <div className="flex flex-1 flex-col">
         <main className="flex-1 p-4 md:p-6">
-          <Tabs defaultValue="list">
+          <Tabs
+            defaultValue="list"
+            value={currentTab}
+            onValueChange={setCurrentTab}
+          >
             <TabsList>
               <TabsTrigger value="list">List View</TabsTrigger>
               <TabsTrigger value="grid">Grid View</TabsTrigger>
               <TabsTrigger value="create">Create</TabsTrigger>
+              <TabsTrigger value="edit">Edit</TabsTrigger>
             </TabsList>
             {error && <div className="text-red-600">{error}</div>}
             {message && <div className="text-green-600">{message}</div>}
@@ -160,7 +219,13 @@ export default function CRUDproducts() {
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                  <DropdownMenuItem>Edit</DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleEditProduct(product.id)
+                                    }
+                                  >
+                                    Edit
+                                  </DropdownMenuItem>
                                   <DropdownMenuItem
                                     onClick={() => handleDelete(product.id)}
                                   >
@@ -286,8 +351,11 @@ export default function CRUDproducts() {
                 <CardContent>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {products.map((product) => (
-                      <div key={product.id} className="relative overflow-hidden rounded-lg group">
-                        <image
+                      <div
+                        key={product.id}
+                        className="relative overflow-hidden rounded-lg group"
+                      >
+                        <img
                           src={product.image || "/placeholder.svg"}
                           alt={product.title}
                           width={400}
@@ -295,9 +363,15 @@ export default function CRUDproducts() {
                           className="object-cover w-full h-48"
                         />
                         <div className="p-4 bg-background">
-                          <h3 className="text-lg font-semibold">{product.title}</h3>
-                          <p className="text-sm text-muted-foreground">{product.desc}</p>
-                          <p className="text-sm text-muted-foreground">{product.release_date}</p>
+                          <h3 className="text-lg font-semibold">
+                            {product.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {product.desc}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {product.release_date}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -308,41 +382,111 @@ export default function CRUDproducts() {
             <TabsContent value="edit">
               <Card>
                 <CardHeader>
-                  <CardTitle>Create Post</CardTitle>
+                  <CardTitle>Edit Product</CardTitle>
                   <CardDescription>
-                    Fill out the form to create a new post.
+                    Edit the form to update the product.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="grid gap-4">
+                  <form
+                    className="grid gap-4"
+                    onSubmit={handleUpdateProduct}
+                    encType="multipart/form-data"
+                  >
                     <div className="grid gap-1">
                       <Label htmlFor="title">Title</Label>
-                      <Input id="title" placeholder="Enter post title" />
-                    </div>
-                    <div className="grid gap-1">
-                      <Label htmlFor="content">Content</Label>
-                      <Textarea
-                        id="content"
-                        placeholder="Enter post content"
-                        rows={5}
+                      <Input
+                        id="title"
+                        name="title"
+                        value={newProduct.title}
+                        onChange={handleInputChange}
+                        placeholder="Enter product title"
+                        required
                       />
                     </div>
                     <div className="grid gap-1">
-                      <Label htmlFor="author">Author</Label>
-                      <Input id="author" placeholder="Enter author name" />
+                      <Label htmlFor="desc">Description</Label>
+                      <Textarea
+                        id="desc"
+                        name="desc"
+                        value={newProduct.desc}
+                        onChange={handleInputChange}
+                        placeholder="Enter product description"
+                        rows={5}
+                        required
+                      />
+                    </div>
+                    <div>
+                      {newProduct.image && (
+                        <div className="grid gap-1">
+                          <Label>New Image</Label>
+                          <img
+                            src={URL.createObjectURL(newProduct.image)}
+                            alt="New product"
+                            className="w-32 h-32 object-cover"
+                          />
+                        </div>
+                      )}
+                      {editProductId && (
+                        <div className="grid gap-1">
+                          <Label>Current Image</Label>
+                          <img
+                            src={
+                              products.find(
+                                (product) => product.id === editProductId
+                              )?.image
+                            }
+                            alt="Current product"
+                            className="w-32 h-32 object-cover"
+                          />
+                        </div>
+                      )}
                     </div>
                     <div className="grid gap-1">
-                      <Label htmlFor="status">Status</Label>
-                      <Select id="status">
-                        <option value="draft">Draft</option>
-                        <option value="published">Published</option>
-                      </Select>
+                      <Label htmlFor="image">Image</Label>
+                      <Input
+                        id="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
                     </div>
+                    <div className="grid gap-1">
+                      <Label htmlFor="rating">Rating</Label>
+                      <Input
+                        id="rating"
+                        name="rating"
+                        type="number"
+                        value={newProduct.rating}
+                        onChange={handleInputChange}
+                        placeholder="Enter product rating"
+                      />
+                    </div>
+                    <div className="grid gap-1">
+                      <Label htmlFor="category">Category</Label>
+                      <Input
+                        id="category"
+                        name="category"
+                        value={newProduct.category}
+                        onChange={handleInputChange}
+                        placeholder="Enter product category"
+                        required
+                      />
+                    </div>
+                    <div className="grid gap-1">
+                      <Label htmlFor="release_date">Release Date</Label>
+                      <Input
+                        id="release_date"
+                        name="release_date"
+                        type="date"
+                        value={newProduct.release_date}
+                        onChange={handleInputChange}
+                        placeholder="Enter release date"
+                      />
+                    </div>
+                    <Button type="submit">Update Product</Button>
                   </form>
                 </CardContent>
-                <CardFooter>
-                  <Button>Save Post</Button>
-                </CardFooter>
               </Card>
             </TabsContent>
           </Tabs>
