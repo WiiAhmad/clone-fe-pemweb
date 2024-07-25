@@ -5,11 +5,14 @@ import DefaultLayout from "@/components/layout/DefaultLayout";
 import SignIn from "./Sign/SignIn";
 import SignUp from "./Sign/SignUp";
 import Products from "./Products/Products";
-import Activities from "./Activities/Activities"; 
+import Activities from "./Activities/Activities";
 import Dashboard from "./Dashboard/Dashboard";
 import ProtectedRoute from "@/components/security/ProtectedRoute"; // Import the ProtectedRoute component
 import DashboardLayout from "@/components/layout/dashboard/DashboardLayout";
 import CRUDproducts from "./CRUDproducts/products";
+import CRUDactivities from "./CRUDactivities/activities";
+import CRUDtestimoni from "./CRUDtestimoni/testimoni";
+
 
 const router = createBrowserRouter([
   {
@@ -64,7 +67,15 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/products",
         element: <CRUDproducts />,
-      }
+      },
+      {
+        path: "/dashboard/activities",
+        element: <CRUDactivities />,
+      },
+      {
+        path: "/dashboard/testimoni",
+        element: <CRUDtestimoni />,
+      },
     ],
   }
 ]);

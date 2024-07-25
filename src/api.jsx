@@ -84,16 +84,9 @@ export const updateProduct = async (id, productData) => {
     const headers = productData instanceof FormData
       ? { "Content-Type": "multipart/form-data" }
       : { "Content-Type": "application/json" };
-    // Fetch the original product data before updating
-    const originalProductResponse = await api.get(`/products/${id}/`);
-    const originalProductData = originalProductResponse.data;
-    console.log("Original product data:", originalProductData); // Debugging log
+
     // Update the product
-    const response = await api.put(`/products/${id}/`, productData, { headers });
-    // Fetch the updated product data after updating
-    const updatedProductResponse = await api.get(`/products/${id}/`);
-    const updatedProductData = updatedProductResponse.data;
-    console.log("Updated product data:", updatedProductData); // Debugging log
+    const response = await api.post(`/products/${id}/`, productData, { headers });
     console.log("Response data:", response.data); // Debugging log
     return response.data;
   } catch (error) {
@@ -109,6 +102,153 @@ export const deleteProduct = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error deleting product:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Update an existing activity by ID
+export const updateActivity = async (id, activityData) => {
+  try {
+    console.log("Updating activity with ID:", id); // Debugging log
+    console.log("Activity data:", activityData); // Debugging log
+
+    const headers = activityData instanceof FormData
+      ? { "Content-Type": "multipart/form-data" }
+      : { "Content-Type": "application/json" };
+
+    // Update the activity
+    const response = await api.post(`/activities/${id}/`, activityData, { headers });
+    console.log("Response data:", response.data); // Debugging log
+    return response.data;
+  } catch (error) {
+    console.error("Error updating activity:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Delete an activity by ID
+export const deleteActivity = async (id) => {
+  try {
+    const response = await api.delete(`/activities/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting activity:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Update an existing testimoni by ID
+export const updateTestimoni = async (id, testimoniData) => {
+  try {
+    console.log("Updating testimoni with ID:", id); // Debugging log
+    console.log("Testimoni data:", testimoniData); // Debugging log
+
+    const headers = testimoniData instanceof FormData
+      ? { "Content-Type": "multipart/form-data" }
+      : { "Content-Type": "application/json" };
+
+    // Update the testimoni
+    const response = await api.post(`/testimoni/${id}/`, testimoniData, { headers });
+    console.log("Response data:", response.data); // Debugging log
+    return response.data;
+  } catch (error) {
+    console.error("Error updating testimoni:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Delete a testimoni by ID
+export const deleteTestimoni = async (id) => {
+  try {
+    const response = await api.delete(`/testimoni/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting testimoni:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Fetch all activities
+export const getAllActivities = async () => {
+  try {
+    const response = await api.get("/activities/");
+    return response.data.map(activity => {
+      if (activity.image) {
+        activity.image = constructImageUrl(activity.image);
+      }
+      return activity;
+    });
+  } catch (error) {
+    console.error("Error fetching activities:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Fetch all testimonies
+export const getAllTestimonies = async () => {
+  try {
+    const response = await api.get("/testimoni/");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching testimonies:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Fetch activity details by ID
+export const getActivityById = async (id) => {
+  try {
+    const response = await api.get(`/activities/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching activity details:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Fetch testimoni details by ID
+export const getTestimoniById = async (id) => {
+  try {
+    const response = await api.get(`/testimoni/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching testimoni details:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Create a new activity
+export const createActivity = async (activityData) => {
+  try {
+    console.log("Creating activity with data:", activityData); // Debugging log
+    const headers = activityData instanceof FormData
+      ? { "Content-Type": "multipart/form-data" }
+      : { "Content-Type": "application/json" };
+
+    const response = await api.post("/activities/", activityData, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating activity:", error.response || error.message);
+    throw error;
+  }
+};
+
+// Create a new testimoni
+export const createTestimoni = async (testimoniData) => {
+  try {
+    console.log("Creating testimoni with data:", testimoniData); // Debugging log
+    const headers = testimoniData instanceof FormData
+      ? { "Content-Type": "multipart/form-data" }
+      : { "Content-Type": "application/json" };
+
+    for(let [key, value] of testimoniData.entries()){
+      console.log(`${key}: ${value}`);
+    }
+
+    const response = await api.post("/testimoni/", testimoniData, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating testimoni:", error.response || error.message);
     throw error;
   }
 };

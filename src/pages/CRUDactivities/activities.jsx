@@ -31,144 +31,120 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
-import { getAllProducts, createProduct, updateProduct, deleteProduct, getProductById } from "@/api"; // Import the API functions
+import { getAllActivities, createActivity, updateActivity, deleteActivity, getActivityById } from "@/api"; // Import the API functions
 
-export default function CRUDproducts() {
-  const [products, setProducts] = useState([]);
+export default function CRUDactivities() {
+  const [activities, setActivities] = useState([]);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState(""); // Add this line
+  const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentTab, setCurrentTab] = useState("list"); // Add state for current tab
-  const [editProductId, setEditProductId] = useState(null);
-  const [newProduct, setNewProduct] = useState({
+  const [currentTab, setCurrentTab] = useState("list");
+  const [editActivityId, setEditActivityId] = useState(null);
+  const [newActivity, setNewActivity] = useState({
     title: "",
     desc: "",
-    image: null, // Store file object
-    rating: "",
-    category: "",
-    release_date: "",
+    image: null,
+    date: "",
   });
 
-  const fetchProducts = async () => {
+  const fetchActivities = async () => {
     setIsLoading(true);
     try {
-      const data = await getAllProducts();
-      setProducts(data);
+      const data = await getAllActivities();
+      setActivities(data);
     } catch (error) {
-      console.error("Error fetching products:", error); // Log the error for debugging
-      setError("Failed to fetch products. Please try again.");
+      console.error("Error fetching activities:", error);
+      setError("Failed to fetch activities. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchActivities();
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      await deleteProduct(id);
-      fetchProducts(); // Refresh the list after deletion
-      setMessage("Product deleted successfully"); // Add success message
+      await deleteActivity(id);
+      fetchActivities();
+      setMessage("Activity deleted successfully");
     } catch (error) {
-      console.error("Error deleting product:", error); // Log the error for debugging
-      setError("Failed to delete product. Please try again.");
+      console.error("Error deleting activity:", error);
+      setError("Failed to delete activity. Please try again.");
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewProduct({ ...newProduct, [name]: value });
+    setNewActivity({ ...newActivity, [name]: value });
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setNewProduct({ ...newProduct, image: file });
+      setNewActivity({ ...newActivity, image: file });
     }
   };
 
-  const handleCreateProduct = async (e) => {
+  const handleCreateActivity = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    Object.keys(newProduct).forEach(key => {
-      formData.append(key, newProduct[key]);
+    Object.keys(newActivity).forEach(key => {
+      formData.append(key, newActivity[key]);
     });
 
-    // Log the form data
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     try {
-      await createProduct(formData); // Pass FormData object
-      setNewProduct({
+      await createActivity(formData);
+      setNewActivity({
         title: "",
         desc: "",
-        image: null, // Reset to null
-        rating: "",
-        category: "",
-        release_date: "",
+        image: null,
+        date: "",
       });
-      setMessage("Product created successfully");
-      fetchProducts();
+      setMessage("Activity created successfully");
+      fetchActivities();
     } catch (error) {
-      setError("Failed to create product. Please try again.");
+      setError("Failed to create activity. Please try again.");
     }
   };
 
-  const handleEditProduct = async (id) => {
+  const handleEditActivity = async (id) => {
     try {
-      const product = await getProductById(id);
-      setNewProduct({
-        title: product.title,
-        desc: product.desc,
-        image: null, // Reset to null, as we don't handle existing images in the form
-        rating: product.rating,
-        category: product.category,
-        release_date: product.release_date,
+      const activity = await getActivityById(id);
+      setNewActivity({
+        title: activity.title,
+        desc: activity.desc,
+        image: null,
+        date: activity.date,
       });
-      setEditProductId(id);
-      setCurrentTab("edit"); // Ensure this line is present to switch to the edit tab
+      setEditActivityId(id);
+      setCurrentTab("edit");
     } catch (error) {
-      setError("Failed to load product. Please try again.");
+      setError("Failed to load activity. Please try again.");
     }
   };
 
-  const handleUpdateProduct = async (e) => {
+  const handleUpdateActivity = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-
-    // Append only changed fields to the FormData object
-    Object.keys(newProduct).forEach((key) => {
-      if (newProduct[key] !== "" && newProduct[key] !== null) {
-        formData.append(key, newProduct[key]);
+    Object.keys(newActivity).forEach((key) => {
+      if (newActivity[key] !== "" && newActivity[key] !== null) {
+        formData.append(key, newActivity[key]);
       }
     });
 
-    // Add spoofing method
     formData.append("_method", "PATCH");
 
-    // Log the formData entries
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     try {
-      console.log("Sending formData:", formData); // Log before sending
-      await updateProduct(editProductId, formData); // Pass FormData object
-      console.log("FormData sent successfully"); // Log after sending
-
-      setMessage("Product updated successfully");
-      fetchProducts();
-      setCurrentTab("list"); // Switch to list view after update
+      await updateActivity(editActivityId, formData);
+      setMessage("Activity updated successfully");
+      fetchActivities();
+      setCurrentTab("list");
     } catch (error) {
-      setError("Failed to update product. Please try again.");
+      setError("Failed to update activity. Please try again.");
     }
   };
-
 
   return (
     <div className="flex min-h-screen w-full">
@@ -189,8 +165,8 @@ export default function CRUDproducts() {
             <TabsContent value="list">
               <Card>
                 <CardHeader>
-                  <CardTitle>Products</CardTitle>
-                  <CardDescription>Manage your products here.</CardDescription>
+                  <CardTitle>Activities</CardTitle>
+                  <CardDescription>Manage your activities here.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {isLoading ? (
@@ -201,20 +177,16 @@ export default function CRUDproducts() {
                         <TableRow>
                           <TableHead>Title</TableHead>
                           <TableHead>Desc</TableHead>
-                          <TableHead>Rating</TableHead>
-                          <TableHead>Category</TableHead>
-                          <TableHead>Release Date</TableHead>
+                          <TableHead>Date</TableHead>
                           <TableHead>Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {products.map((product) => (
-                          <TableRow key={product.id}>
-                            <TableCell>{product.title}</TableCell>
-                            <TableCell>{product.desc}</TableCell>
-                            <TableCell>{product.rating}</TableCell>
-                            <TableCell>{product.category}</TableCell>
-                            <TableCell>{product.release_date}</TableCell>
+                        {activities.map((activity) => (
+                          <TableRow key={activity.id}>
+                            <TableCell>{activity.title}</TableCell>
+                            <TableCell>{activity.desc}</TableCell>
+                            <TableCell>{activity.date}</TableCell>
                             <TableCell>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -225,13 +197,13 @@ export default function CRUDproducts() {
                                 <DropdownMenuContent align="end">
                                   <DropdownMenuItem
                                     onClick={() =>
-                                      handleEditProduct(product.id)
+                                      handleEditActivity(activity.id)
                                     }
                                   >
                                     Edit
                                   </DropdownMenuItem>
                                   <DropdownMenuItem
-                                    onClick={() => handleDelete(product.id)}
+                                    onClick={() => handleDelete(activity.id)}
                                   >
                                     Delete
                                   </DropdownMenuItem>
@@ -265,25 +237,25 @@ export default function CRUDproducts() {
             <TabsContent value="create">
               <Card>
                 <CardHeader>
-                  <CardTitle>Create Product</CardTitle>
+                  <CardTitle>Create Activity</CardTitle>
                   <CardDescription>
-                    Fill out the form to create a new product.
+                    Fill out the form to create a new activity.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form
                     className="grid gap-4"
-                    onSubmit={handleCreateProduct}
-                    encType="multipart/form-data" // Add this line
+                    onSubmit={handleCreateActivity}
+                    encType="multipart/form-data"
                   >
                     <div className="grid gap-1">
                       <Label htmlFor="title">Title</Label>
                       <Input
                         id="title"
                         name="title"
-                        value={newProduct.title}
+                        value={newActivity.title}
                         onChange={handleInputChange}
-                        placeholder="Enter product title"
+                        placeholder="Enter activity title"
                         required
                       />
                     </div>
@@ -292,11 +264,22 @@ export default function CRUDproducts() {
                       <Textarea
                         id="desc"
                         name="desc"
-                        value={newProduct.desc}
+                        value={newActivity.desc}
                         onChange={handleInputChange}
-                        placeholder="Enter product description"
+                        placeholder="Enter activity description"
                         rows={5}
                         required
+                      />
+                    </div>
+                    <div className="grid gap-1">
+                      <Label htmlFor="date">Date</Label>
+                      <Input
+                        id="date"
+                        name="date"
+                        type="datetime-local"
+                        value={newActivity.date}
+                        onChange={handleInputChange}
+                        placeholder="Enter activity date"
                       />
                     </div>
                     <div className="grid gap-1">
@@ -308,40 +291,7 @@ export default function CRUDproducts() {
                         onChange={handleImageChange}
                       />
                     </div>
-                    <div className="grid gap-1">
-                      <Label htmlFor="rating">Rating</Label>
-                      <Input
-                        id="rating"
-                        name="rating"
-                        type="number"
-                        value={newProduct.rating}
-                        onChange={handleInputChange}
-                        placeholder="Enter product rating"
-                      />
-                    </div>
-                    <div className="grid gap-1">
-                      <Label htmlFor="category">Category</Label>
-                      <Input
-                        id="category"
-                        name="category"
-                        value={newProduct.category}
-                        onChange={handleInputChange}
-                        placeholder="Enter product category"
-                        required
-                      />
-                    </div>
-                    <div className="grid gap-1">
-                      <Label htmlFor="release_date">Release Date</Label>
-                      <Input
-                        id="release_date"
-                        name="release_date"
-                        type="date"
-                        value={newProduct.release_date}
-                        onChange={handleInputChange}
-                        placeholder="Enter release date"
-                      />
-                    </div>
-                    <Button type="submit">Save Product</Button>
+                    <Button type="submit">Create Activity</Button>
                   </form>
                 </CardContent>
               </Card>
@@ -349,32 +299,32 @@ export default function CRUDproducts() {
             <TabsContent value="grid">
               <Card>
                 <CardHeader>
-                  <CardTitle>Products</CardTitle>
-                  <CardDescription>Manage your products here.</CardDescription>
+                  <CardTitle>Activities</CardTitle>
+                  <CardDescription>Manage your activities here.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {products.map((product) => (
+                    {activities.map((activity) => (
                       <div
-                        key={product.id}
+                        key={activity.id}
                         className="relative overflow-hidden rounded-lg group"
                       >
                         <img
-                          src={product.image || "/placeholder.svg"}
-                          alt={product.title}
+                          src={activity.image || "/placeholder.svg"}
+                          alt={activity.title}
                           width={400}
                           height={300}
                           className="object-cover w-full h-48"
                         />
                         <div className="p-4 bg-background">
                           <h3 className="text-lg font-semibold">
-                            {product.title}
+                            {activity.title}
                           </h3>
                           <p className="text-sm text-muted-foreground">
-                            {product.desc}
+                            {activity.desc}
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            {product.release_date}
+                            {activity.date}
                           </p>
                         </div>
                       </div>
@@ -386,15 +336,15 @@ export default function CRUDproducts() {
             <TabsContent value="edit">
               <Card>
                 <CardHeader>
-                  <CardTitle>Edit Product</CardTitle>
+                  <CardTitle>Edit Activity</CardTitle>
                   <CardDescription>
-                    Edit the form to update the product.
+                    Edit the form to update the activity.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form
                     className="grid gap-4"
-                    onSubmit={handleUpdateProduct}
+                    onSubmit={handleUpdateActivity}
                     encType="multipart/form-data"
                   >
                     <div className="grid gap-1">
@@ -402,9 +352,9 @@ export default function CRUDproducts() {
                       <Input
                         id="title"
                         name="title"
-                        value={newProduct.title}
+                        value={newActivity.title}
                         onChange={handleInputChange}
-                        placeholder="Enter product title"
+                        placeholder="Enter activity title"
                         required
                       />
                     </div>
@@ -413,38 +363,49 @@ export default function CRUDproducts() {
                       <Textarea
                         id="desc"
                         name="desc"
-                        value={newProduct.desc}
+                        value={newActivity.desc}
                         onChange={handleInputChange}
-                        placeholder="Enter product description"
+                        placeholder="Enter activity description"
                         rows={5}
                         required
                       />
                     </div>
                     <div>
-                      {newProduct.image && (
+                      {newActivity.image && (
                         <div className="grid gap-1">
                           <Label>New Image</Label>
                           <img
-                            src={URL.createObjectURL(newProduct.image)}
-                            alt="New product"
+                            src={URL.createObjectURL(newActivity.image)}
+                            alt="New activity"
                             className="w-32 h-32 object-cover"
                           />
                         </div>
                       )}
-                      {editProductId && (
+                      {editActivityId && (
                         <div className="grid gap-1">
                           <Label>Current Image</Label>
                           <img
                             src={
-                              products.find(
-                                (product) => product.id === editProductId
+                              activities.find(
+                                (activity) => activity.id === editActivityId
                               )?.image
                             }
-                            alt="Current product"
+                            alt="Current activity"
                             className="w-32 h-32 object-cover"
                           />
                         </div>
                       )}
+                    </div>
+                    <div className="grid gap-1">
+                      <Label htmlFor="date">Date</Label>
+                      <Input
+                        id="date"
+                        name="date"
+                        type="datetime-local"
+                        value={newActivity.date}
+                        onChange={handleInputChange}
+                        placeholder="Enter activity date"
+                      />
                     </div>
                     <div className="grid gap-1">
                       <Label htmlFor="image">Image</Label>
@@ -455,40 +416,7 @@ export default function CRUDproducts() {
                         onChange={handleImageChange}
                       />
                     </div>
-                    <div className="grid gap-1">
-                      <Label htmlFor="rating">Rating</Label>
-                      <Input
-                        id="rating"
-                        name="rating"
-                        type="number"
-                        value={newProduct.rating}
-                        onChange={handleInputChange}
-                        placeholder="Enter product rating"
-                      />
-                    </div>
-                    <div className="grid gap-1">
-                      <Label htmlFor="category">Category</Label>
-                      <Input
-                        id="category"
-                        name="category"
-                        value={newProduct.category}
-                        onChange={handleInputChange}
-                        placeholder="Enter product category"
-                        required
-                      />
-                    </div>
-                    <div className="grid gap-1">
-                      <Label htmlFor="release_date">Release Date</Label>
-                      <Input
-                        id="release_date"
-                        name="release_date"
-                        type="date"
-                        value={newProduct.release_date}
-                        onChange={handleInputChange}
-                        placeholder="Enter release date"
-                      />
-                    </div>
-                    <Button type="submit">Update Product</Button>
+                    <Button type="submit">Update Activity</Button>
                   </form>
                 </CardContent>
               </Card>
@@ -499,7 +427,6 @@ export default function CRUDproducts() {
     </div>
   );
 }
-
 
 function ChevronLeftIcon(props) {
   return (
