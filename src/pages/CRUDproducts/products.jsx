@@ -4,34 +4,18 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuCheckboxItem,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "@/components/ui/table";
+import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
 import { getAllProducts, createProduct, updateProduct, deleteProduct, getProductById } from "@/api"; // Import the API functions
 
 export default function CRUDproducts() {
@@ -169,6 +153,9 @@ export default function CRUDproducts() {
     }
   };
 
+  const handleCategoryChange = (category) => {
+    setNewProduct({ ...newProduct, category });
+  };
 
   return (
     <div className="flex min-h-screen w-full">
@@ -321,14 +308,59 @@ export default function CRUDproducts() {
                     </div>
                     <div className="grid gap-1">
                       <Label htmlFor="category">Category</Label>
-                      <Input
-                        id="category"
-                        name="category"
-                        value={newProduct.category}
-                        onChange={handleInputChange}
-                        placeholder="Enter product category"
-                        required
-                      />
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" className="w-full">
+                            {newProduct.category || "Select Category"}
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>Kategori</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Pupuk"}
+                            onCheckedChange={() => handleCategoryChange("Pupuk")}
+                          >
+                            Pupuk
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Pestisida"}
+                            onCheckedChange={() => handleCategoryChange("Pestisida")}
+                          >
+                            Pestisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Insektisida"}
+                            onCheckedChange={() => handleCategoryChange("Insektisida")}
+                          >
+                            Insektisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Benih"}
+                            onCheckedChange={() => handleCategoryChange("Benih")}
+                          >
+                            Benih
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Herbisida"}
+                            onCheckedChange={() => handleCategoryChange("Herbisida")}
+                          >
+                            Herbisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Biopestisida"}
+                            onCheckedChange={() => handleCategoryChange("Biopestisida")}
+                          >
+                            Biopestisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Peralatan"}
+                            onCheckedChange={() => handleCategoryChange("Peralatan")}
+                          >
+                            Peralatan
+                          </DropdownMenuCheckboxItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                     <div className="grid gap-1">
                       <Label htmlFor="release_date">Release Date</Label>
@@ -468,14 +500,59 @@ export default function CRUDproducts() {
                     </div>
                     <div className="grid gap-1">
                       <Label htmlFor="category">Category</Label>
-                      <Input
-                        id="category"
-                        name="category"
-                        value={newProduct.category}
-                        onChange={handleInputChange}
-                        placeholder="Enter product category"
-                        required
-                      />
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" className="w-full">
+                            {newProduct.category || "Select Category"}
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>Kategori</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Pupuk"}
+                            onCheckedChange={() => handleCategoryChange("Pupuk")}
+                          >
+                            Pupuk
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Pestisida"}
+                            onCheckedChange={() => handleCategoryChange("Pestisida")}
+                          >
+                            Pestisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Insektisida"}
+                            onCheckedChange={() => handleCategoryChange("Insektisida")}
+                          >
+                            Insektisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Benih"}
+                            onCheckedChange={() => handleCategoryChange("Benih")}
+                          >
+                            Benih
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Herbisida"}
+                            onCheckedChange={() => handleCategoryChange("Herbisida")}
+                          >
+                            Herbisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Biopestisida"}
+                            onCheckedChange={() => handleCategoryChange("Biopestisida")}
+                          >
+                            Biopestisida
+                          </DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem
+                            checked={newProduct.category === "Peralatan"}
+                            onCheckedChange={() => handleCategoryChange("Peralatan")}
+                          >
+                            Peralatan
+                          </DropdownMenuCheckboxItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                     <div className="grid gap-1">
                       <Label htmlFor="release_date">Release Date</Label>

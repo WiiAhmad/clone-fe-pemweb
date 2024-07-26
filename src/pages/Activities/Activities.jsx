@@ -1,39 +1,15 @@
+import { useEffect, useState } from "react";
+import { getAllActivities } from "../../api"; // Import the getAllActivities function
+
 export default function Activities() {
-  // Sample data for activities
-  const activities = [
-    {
-      id: 1,
-      title: "Hiking Trail",
-      desc: "Explore the beautiful mountain trails.",
-      category: "Hiking",
-      image: "/images/hiking-trail.jpg",
-      date: "July 25, 2024", // Example date
-    },
-    {
-      id: 2,
-      title: "Camping",
-      desc: "Get out and enjoy the campgrounds.",
-      category: "Camping",
-      image: "/images/camping.jpg",
-      date: "August 15, 2024", // Example date
-    },
-    {
-      id: 3,
-      title: "Fishing",
-      desc: "Catch some amazing fish.",
-      category: "Fishing",
-      image: "/images/fishing.jpg",
-      date: "September 5, 2024", // Example date
-    },
-    {
-      id: 4,
-      title: "Hiking Trail",
-      desc: "Explore the beautiful mountain trails.",
-      category: "Hiking",
-      image: "/images/hiking-trail.jpg",
-      date: "July 25, 2024", // Example date
-    },
-  ];
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    // Fetch activities from API
+    getAllActivities()
+      .then((data) => setActivities(data))
+      .catch((error) => console.error("Error fetching activities:", error));
+  }, []);
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
@@ -42,9 +18,9 @@ export default function Activities() {
           Aktivitas Terbaru Kami
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {activities.map((activity, id) => (
+          {activities.map((activity) => (
             <div
-              key={id}
+              key={activity.id}
               className="flex flex-col rounded-lg shadow-lg group hover:shadow-xl hover:-translate-y-2 transition-transform duration-300 ease-in-out"
             >
               <img

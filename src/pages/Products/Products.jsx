@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -10,57 +10,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { getAllProducts } from "../../api"; // Import the getAllProducts function
 
 export default function Products() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const products = [
-    {
-      id: 1,
-      title: "Pupuk A",
-      desc: "Pupuk kaya nitrogen untuk pertumbuhan cepat",
-      image: "/placeholder.svg",
-      rating: 4.5,
-      category: "Pupuk",
-      release_date: "2023-01-15",
-    },
-    {
-      id: 2,
-      title: "Pestisida B",
-      desc: "Pestisida spektrum luas untuk perlindungan tanaman",
-      image: "/placeholder.svg",
-      rating: 4.8,
-      category: "Pestisida",
-      release_date: "2023-02-20",
-    },
-    {
-      id: 3,
-      title: "Varietas Benih C",
-      desc: "Benih tahan kekeringan untuk hasil panen lebih baik",
-      image: "/placeholder.svg",
-      rating: 4.2,
-      category: "Benih",
-      release_date: "2023-03-10",
-    },
-    {
-      id: 4,
-      title: "Herbisida D",
-      desc: "Herbisida selektif untuk pengendalian gulma",
-      image: "/placeholder.svg",
-      rating: 4.6,
-      category: "Herbisida",
-      release_date: "2023-04-05",
-    },
-    {
-      id: 5,
-      title: "Peralatan E",
-      desc: "Peralatan pertanian canggih untuk efisiensi",
-      image: "/placeholder.svg",
-      rating: 4.7,
-      category: "Peralatan",
-      release_date: "2023-05-18",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch products from API
+    getAllProducts()
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Error fetching products:", error));
+  }, []);
 
   const filteredProducts = useMemo(() => {
     let filtered = products;
@@ -80,7 +42,7 @@ export default function Products() {
     }
 
     return filtered;
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, products]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -134,6 +96,12 @@ export default function Products() {
                     Pestisida
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
+                    checked={selectedCategory === "Insektisida"}
+                    onCheckedChange={() => handleCategoryChange("Insektisida")}
+                  >
+                    Insektisida
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
                     checked={selectedCategory === "Benih"}
                     onCheckedChange={() => handleCategoryChange("Benih")}
                   >
@@ -144,6 +112,12 @@ export default function Products() {
                     onCheckedChange={() => handleCategoryChange("Herbisida")}
                   >
                     Herbisida
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={selectedCategory === "Biopestisida"}
+                    onCheckedChange={() => handleCategoryChange("Biopestisida")}
+                  >
+                    Biopestisida
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
                     checked={selectedCategory === "Peralatan"}
@@ -159,7 +133,6 @@ export default function Products() {
       </header>
       <main>
         <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Semua Produk</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
               <div
@@ -173,15 +146,22 @@ export default function Products() {
                     className="w-full h-64 object-cover"
                   />
                   <div className="p-4">
-                    <h3 className="text-lg font-bold mb-2">{product.title}</h3>
-                    <p className="text-gray-600 mb-2">{product.desc}</p>
                     <div className="flex justify-between items-center">
+                      <div>
+                        <h3 className="text-lg font-bold mb-2">
+                          {product.title}
+                        </h3>
+                      </div>
                       <div className="flex items-center gap-2">
                         <StarIcon className="w-4 h-4 fill-primary" />
-                        <span className="text-sm font-medium">
-                          {product.rating.toFixed(1)}
-                        </span>
+                        <p>{product.rating}</p>
                       </div>
+                    </div>
+                    <p className="text-gray-600 mb-2">
+                      Kategori: {product.category}
+                    </p>
+                    <p className="text-gray-600 mb-2">{product.desc}</p>
+                    <div className="flex justify-between items-center">
                       <span className="text-gray-700 font-bold">
                         {new Date(product.release_date).toLocaleDateString(
                           "id-ID",

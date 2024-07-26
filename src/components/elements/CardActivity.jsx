@@ -19,3 +19,15 @@ export default function CardActivity({ image, title, description, date }) {
     </Card>
   );
 }
+
+function ActivityImage({ image, altText }) {
+  return (
+    <img
+      src={image}
+      width="550"
+      height="310"
+      alt={altText}
+      className="mx-auto aspect-video overflow-hidden rounded-t-xl object-cover object-center"
+    />
+  );
+}
