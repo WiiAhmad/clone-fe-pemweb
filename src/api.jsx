@@ -188,7 +188,13 @@ export const getAllActivities = async () => {
 export const getAllTestimonies = async () => {
   try {
     const response = await api.get("/testimoni/");
-    return response.data;
+    return response.data.map(testimoni => {
+        if (testimoni.image) {
+            testimoni.image = constructImageUrl(testimoni.image);
+        }
+        return testimoni;
+        }
+    )
   } catch (error) {
     console.error("Error fetching testimonies:", error.response || error.message);
     throw error;

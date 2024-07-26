@@ -44,6 +44,7 @@ export default function CRUDtestimoni() {
     rating: "",
     testimoni: "",
     image: null,
+    date: "",
   });
 
   const fetchTestimonies = async () => {
@@ -99,6 +100,7 @@ export default function CRUDtestimoni() {
         rating: "",
         testimoni: "",
         image: null,
+        date: "",
       });
       setMessage("Testimoni created successfully");
       fetchTestimonies();
@@ -114,6 +116,7 @@ export default function CRUDtestimoni() {
         rating: testimoni.rating,
         testimoni: testimoni.testimoni,
         image: null,
+        date: testimoni.date,
       });
       setEditTestimoniId(id);
       setCurrentTab("edit");
@@ -162,7 +165,9 @@ export default function CRUDtestimoni() {
               <Card>
                 <CardHeader>
                   <CardTitle>Testimonies</CardTitle>
-                  <CardDescription>Manage your testimonies here.</CardDescription>
+                  <CardDescription>
+                    Manage your testimonies here.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {isLoading ? (
@@ -173,6 +178,7 @@ export default function CRUDtestimoni() {
                         <TableRow>
                           <TableHead>Rating</TableHead>
                           <TableHead>Testimoni</TableHead>
+                          <TableHead>Date</TableHead>
                           <TableHead>Actions</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -181,6 +187,7 @@ export default function CRUDtestimoni() {
                           <TableRow key={testimoni.id}>
                             <TableCell>{testimoni.rating}</TableCell>
                             <TableCell>{testimoni.testimoni}</TableCell>
+                            <TableCell>{testimoni.date}</TableCell>
                             <TableCell>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -232,14 +239,22 @@ export default function CRUDtestimoni() {
               <Card>
                 <CardHeader>
                   <CardTitle>Testimonies</CardTitle>
-                  <CardDescription>Manage your testimonies here.</CardDescription>
+                  <CardDescription>
+                    Manage your testimonies here.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {testimonies.map((testimoni) => (
                       <Card key={testimoni.id}>
+                        <div className="relative overflow-hidden rounded-lg group">
+                            <img
+                                src={testimoni.image}
+                                alt="Testimoni"
+                            />
+                        </div>
                         <CardContent>
-                            <img src={testimoni.image} alt={testimoni.testimoni} className="w-32 h-32 object-cover" />
+                          <CardTitle className="my-1">{testimoni.rating}</CardTitle>
                           <p>{testimoni.testimoni}</p>
                         </CardContent>
                       </Card>
@@ -292,6 +307,17 @@ export default function CRUDtestimoni() {
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
+                      />
+                    </div>
+                    <div className="grid gap-1">
+                      <Label htmlFor="date">Date</Label>
+                      <Input
+                        id="date"
+                        name="date"
+                        value={newTestimoni.date}
+                        onChange={handleInputChange}
+                        type="datetime-local"
+                        required
                       />
                     </div>
                     <Button type="submit">Save Testimoni</Button>

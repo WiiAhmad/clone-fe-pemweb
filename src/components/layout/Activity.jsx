@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
 import CardActivity from "../elements/CardActivity";
+import { getAllActivities } from "../../api"; // Import the getAllActivities function
 
 export default function Activity() {
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    // Fetch activities from API
+    getAllActivities()
+      .then((data) => setActivities(data))
+      .catch((error) => console.error("Error fetching activities:", error));
+  }, []);
+
   return (
     <div className="bg-muted">
       <div className="container flex">
@@ -17,9 +28,14 @@ export default function Activity() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-              <CardActivity image="/images/produk-1.jpg" title="Produk 1" description="Deskripsi Produk 1" />
-              <CardActivity image="/images/produk-1.jpg" title="Produk 1" description="Deskripsi Produk 1" />
-              <CardActivity image="/images/produk-1.jpg" title="Produk 1" description="Deskripsi Produk 1" />
+              {activities.map((activity) => (
+                <CardActivity
+                  key={activity.id}
+                  image={activity.image}
+                  title={activity.title}
+                  description={activity.desc}
+                />
+              ))}
             </div>
           </div>
         </section>
