@@ -23,7 +23,8 @@ export default function Activity() {
                   Aktivitas Terbaru Kami
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Berikut adalah beberapa aktivitas terbaru yang telah kami selesaikan
+                  Berikut adalah beberapa aktivitas terbaru yang telah kami
+                  selesaikan
                 </p>
               </div>
             </div>
