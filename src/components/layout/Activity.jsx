@@ -35,6 +35,7 @@ export default function Activity() {
                   image={activity.image}
                   title={activity.title}
                   description={activity.desc}
+                  date={activity.date}
                 />
               ))}
             </div>

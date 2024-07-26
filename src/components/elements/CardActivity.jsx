@@ -1,5 +1,4 @@
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
-import { Link } from "react-router-dom";
 
 export default function CardActivity({ image, title, description, date }) {
   return (
@@ -10,11 +9,7 @@ export default function CardActivity({ image, title, description, date }) {
       <CardContent className="space-y-2">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
-        <div className="flex">
-          <p className="inline-flex justify-end w-full h-10 text-sm font-medium">
-            {date}
-          </p>
-        </div>
+        <CardDescription>{date}</CardDescription>
       </CardContent>
     </Card>
   );
