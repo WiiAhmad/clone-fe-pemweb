@@ -135,11 +135,6 @@ export default function CRUDproducts() {
     // Add spoofing method
     formData.append("_method", "PATCH");
 
-    // Log the formData entries
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     try {
       console.log("Sending formData:", formData); // Log before sending
       await updateProduct(editProductId, formData); // Pass FormData object
